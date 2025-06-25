@@ -24,5 +24,11 @@ Este projeto implementa um elevador funcional de 4 andares utilizando a platafor
 - O motor é controlado com base na diferença entre o andar atual e o solicitado.
 
 ---
+##  Demonstração e testes
 
+
+https://github.com/user-attachments/assets/17adba0b-809c-4788-9a1b-2a5236bc02e0
+
+
+---
 
