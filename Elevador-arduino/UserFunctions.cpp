@@ -8,6 +8,12 @@
 #include "include/motor.h"
 #include "include/sensores.h"
 
+// Variável global para rastrear o estado de emergência
+bool MODO_EMERGENCIA_ATIVO = false; 
+
+// A função 'pararMotor()' deve estar definida em 'include/motor.h' e 'motor.cpp'
+// A função 'desligarLed()' deve estar definida em 'include/leds.h' e 'leds.cpp'
+
 void setupPin()
 {
   setupMotor();
