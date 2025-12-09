@@ -5,6 +5,19 @@
 #define NUMBER_AUTOMATON 3
 #define NUMBER_SUPERVISOR 1
 
+// Defina o ID do novo Evento de Emergência 
+// Este ID deve ser mapeado na modelagem ultraDES
+#define ID_EVENTO_EMERGENCIA 20 
+
+// Defina o pino digital usado para o botão
+// Exemplo, se reutilizar o pino de chamada do Andar 4:
+#define PINO_BOTAO_EMERGENCIA PINO_BOTAO_ANDAR_4
+
+void setupPin() {
+    // ... outras configurações de pinos existentes ...
+    pinMode(PINO_BOTAO_EMERGENCIA, INPUT_PULLUP);
+}
+
 int actualState;
 
 // Functions
