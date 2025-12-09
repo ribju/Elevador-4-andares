@@ -28,6 +28,20 @@ void doEveryLoop(){ //--------------- TODO
   lerBotoes();
   atualizarLedsChamadas();
   verificarAndarAtual();
+// NOVO CÓDIGO DE EMERGÊNCIA
+  // Assumindo que PINO_EMERGENCIA está configurado como INPUT_PULLUP (aciona em LOW)
+  if (digitalRead(PINO_EMERGENCIA) == LOW) { 
+    MODO_EMERGENCIA_ATIVO = true;
+  }
+    
+  // Feedback Sonoro e Visual (Avisa que a emergência está ativa)
+  if (MODO_EMERGENCIA_ATIVO) {
+    digitalWrite(BUZZER_PIN, HIGH); // Buzzer ligado
+    // Se desejar piscar um LED de alerta, adicione a lógica aqui.
+  } else {
+    // Apenas desliga se o modo sair de emergência (via Reset, ver nota abaixo)
+    digitalWrite(BUZZER_PIN, LOW);
+  }
 }
 
 // This set of functions should be implemented in a way to handle the controllable events of the system
@@ -137,7 +151,12 @@ bool EventUncontrollable_fechar_porta(){
 // Here the expected actions should be implemented in each state of the system 
 void StateActionAutomaton0_MotorState0() //parado
 {
-    //Serial.println("A0S0: Parado");
+    if (MODO_EMERGENCIA_ATIVO) {
+        pararMotor(); // Garante o desligamento da ponte H
+        return; // Ignora o resto da lógica do estado
+    }
+	
+	//Serial.println("A0S0: Parado");
     pararMotor();
     hab_motor_parar = false;
     hab_motor_mover = true;
@@ -146,6 +165,12 @@ void StateActionAutomaton0_MotorState0() //parado
 
 void StateActionAutomaton0_MotorState1() //subindo
 {
+	if (MODO_EMERGENCIA_ATIVO) {
+        pararMotor(); 
+        // Ligar o LED de porta aberta se estiver em um andar (opcional)
+        // ligarLed(LED_PORTA_ABERTA); 
+        return; 
+    }
     //Serial.println("A0S1: Subindo");
     subindo = true;
     ligarMotor(0);
@@ -156,6 +181,12 @@ void StateActionAutomaton0_MotorState1() //subindo
 
 void StateActionAutomaton0_MotorState2() // descendo 
 {
+	if (MODO_EMERGENCIA_ATIVO) {
+        pararMotor(); 
+        // Ligar o LED de porta aberta se estiver em um andar (opcional)
+        // ligarLed(LED_PORTA_ABERTA); 
+        return; 
+    }
     //Serial.println("A0S2: Descendo");
     subindo = false;
     ligarMotor(1);
